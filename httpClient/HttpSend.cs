@@ -27,7 +27,7 @@ namespace httpClient
         public void Start(string url, Control.ControlCollection paramsItem, Control.ControlCollection HeaderItem) {
 
 
-
+             
             this.url = url;
             this.paramsItem = paramsItem;
             this.HeaderItem = HeaderItem;
