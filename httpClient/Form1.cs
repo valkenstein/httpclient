@@ -13,7 +13,6 @@ namespace httpClient
 {
     public partial class Form1 : Form
     {
-     
         int countRows = 0;
         HttpSend send;
         public Form1()
@@ -22,21 +21,16 @@ namespace httpClient
             send = new HttpSend();
             MethodBox.SelectedIndex=0;
         }
-
-       
-
         private void AddParam_Click(object sender, EventArgs e)
         {
             AddRows(panelParam);
-
         }
         private void AddHeader_Click(object sender, EventArgs e)
         {
             AddRows(panelHeader);
         }
-
-        TableLayoutPanel CreateTable() {
-
+        TableLayoutPanel CreateTable() 
+        {
             TableLayoutPanel tab = new TableLayoutPanel();
 
             tab.AutoScroll = true;
@@ -70,35 +64,21 @@ namespace httpClient
             panel.BackColor = Color.Black;
             return panel;
         }
-        private void AddRows(Panel table)
+
+        TextBox CreateTextBox(string key) 
         {
-
-            Panel p = CreatePanel();
-            TableLayoutPanel t = CreateTable();
-            p.Controls.Add(t);
-
             TextBox t1 = new TextBox();
             t1.Dock = DockStyle.Fill;
             t1.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204)));
             t1.Location = new Point(3, 3);
             t1.Size = new Size(264, 35);
-            t1.Text = "key";
-            t1.Enter += (sender,e)=> OnFocus((sender as TextBox), "key"); 
-            t1.Leave+= (sender, e) => LeaveFocus((sender as TextBox), "key");
-           
-
-
-            TextBox t2 = new TextBox();
-            t2.Dock = DockStyle.Fill;
-            t2.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204)));
-            t2.Location = new Point(3, 3);
-            t2.Size = new Size(264, 35);
-            t2.Text = "value";
-
-            t2.Enter += (sender, e) => OnFocus((sender as TextBox), "value");
-            t2.Leave += (sender, e) => LeaveFocus((sender as TextBox), "value");
-
-
+            t1.Text = key;
+            t1.Enter += (sender, e) => OnFocus((sender as TextBox), key);
+            t1.Leave += (sender, e) => LeaveFocus((sender as TextBox), key);
+            return t1;
+        }
+        Button CreateButton(Panel p, Panel table) 
+        {
             Button b1 = new Button();
             b1.Dock = DockStyle.Top;
             b1.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(204)));
@@ -108,14 +88,23 @@ namespace httpClient
             b1.UseVisualStyleBackColor = true;
             int j = countRows++;
             b1.Click += (e, EventArgs) => { Remove_Rows(table, p, j); };
-           
+            return b1;
+        }
+
+        private void AddRows(Panel table)
+        {
+            Panel p = CreatePanel();
+            TableLayoutPanel t = CreateTable();
+            p.Controls.Add(t);
+
+            TextBox t1 = CreateTextBox("key");
+            TextBox t2 = CreateTextBox("value");
+            Button b1 = CreateButton(p, table);
 
             t.Controls.Add(t1);
             t.Controls.Add(t2);
             t.Controls.Add(b1);
-
             table.Controls.Add(p);
-           
         }
 
         private void Remove_Rows(Panel table,Panel remove, int i)
@@ -131,7 +120,6 @@ namespace httpClient
             send.Start(textUrl.Text, panelParam.Controls, panelHeader.Controls);
             send.RequestServer(ResultRequestBox, MethodBox.SelectedItem.ToString());
 
-            //ResultRequest.Text = send.result;
             RequestBox.Text = send.url+ send.param;
         }
 
@@ -143,7 +131,6 @@ namespace httpClient
                 text.Text = s;
                 text.ForeColor = Color.Silver;
                 text.Font = new Font(text.Font, FontStyle.Regular);
-
             }
         }
         void OnFocus(TextBox text, string s) {
@@ -154,8 +141,6 @@ namespace httpClient
                 text.ForeColor = Color.Black;
                 text.Font = new Font(text.Font, FontStyle.Bold);
             }
-
         }
     }
-   
 }

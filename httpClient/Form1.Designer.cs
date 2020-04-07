@@ -294,7 +294,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.bottomTable);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Postman";
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);

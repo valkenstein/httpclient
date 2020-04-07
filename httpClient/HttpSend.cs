@@ -22,18 +22,13 @@ namespace httpClient
         private Control.ControlCollection paramsItem;
         private Control.ControlCollection HeaderItem;
         public string result;
-      
-
-        public void Start(string url, Control.ControlCollection paramsItem, Control.ControlCollection HeaderItem) {
-
-
-             
+        public void Start(string url, Control.ControlCollection paramsItem, Control.ControlCollection HeaderItem)
+        {
             this.url = url;
             this.paramsItem = paramsItem;
             this.HeaderItem = HeaderItem;
             param = "";
             result = "";
-
             client = new HttpClient();
 
 
@@ -48,15 +43,13 @@ namespace httpClient
                     param += "&" + txt1.Text + "=" + txt2.Text;
 
                 }
-                else if (txt1.Text != "key" && txt2.Text == "value") {
+                else if (txt1.Text != "key" && txt2.Text == "value")
+                {
                     param += "&" + txt1.Text + "=" + "";
                 }
             }
             param = param.Trim(new char[] { '&' });
-            
-            if (!url.Contains('?'))
-                param = "?" + param;
-
+            if (!url.Contains('?')) param = "?" + param;
 
             try
             {
@@ -66,10 +59,7 @@ namespace httpClient
             {
                 MessageBox.Show(ex.Message);
                 return;
-                
             }
-             
-             
 
             foreach (Panel item in HeaderItem)
             {
@@ -86,27 +76,21 @@ namespace httpClient
                     }
                     catch (Exception ex)
                     {
-
-                        MessageBox.Show("упс"+ex.Message);
+                        MessageBox.Show("упс" + ex.Message);
                         return;
-                    } 
-                } 
-            } 
-            Console.WriteLine();
+                    }
+                }
+            }
         }
 
-        string FormatJson(string json )
+        string FormatJson(string json)
         {
             dynamic parsedJson = JsonConvert.DeserializeObject(json);
             return JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
         }
         public async void GetAsync(string uri, RichTextBox box, string MethodType)
         {
-
-
             if (request == null) return;
-
-
             request.Method = MethodType;
             request.ContentType = "application/json";
             request.ContentLength = 0;
@@ -132,13 +116,8 @@ namespace httpClient
                         var url = uri;
                         var web = new HtmlWeb();
                         var doc = web.Load(url);
-
-                      
                         box.Text = doc.ParsedText;
-
-
                     }
-                    
                 }
             }
             catch (Exception ex)
@@ -146,28 +125,23 @@ namespace httpClient
                 MessageBox.Show(ex.Message);
                 return;
             }
-            
-             
         }
         
-        public async void RequestServer (RichTextBox ResultRequestBox, string methodType)
+        public async void RequestServer(RichTextBox ResultRequestBox, string methodType)
         { 
             try
             {
                // var json   = await client.GetStringAsync(url+param);
                 // SearchResult resultt = JsonConvert.DeserializeObject<SearchResult>(json);
                  GetAsync(url + param, ResultRequestBox, methodType);
-
                // box.Text = FormatJson(json);
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("упс "+ex.Message);
+                MessageBox.Show("упс " + ex.Message);
                 return;
             }
-             
-            Console.WriteLine();
         }
 
     }
